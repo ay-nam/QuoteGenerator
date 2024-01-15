@@ -13,28 +13,29 @@ function App() {
       setAuthor(quote.author);
     }
 
-    randomQuote(); // Call the function to fetch the initial quote
-  }, []); // Add an empty dependency array to run the effect only once
+    randomQuote(); 
+  }, []); 
 
-  let fetchNewQuote = () => {
-    fetch("https://api.quotable.io/random") // Update the protocol to "https"
-      .then(res => res.json())
-      .then(
-        (quote) => {
-          setQuote(quote.content);
-          setAuthor(quote.author);
-        }
-      )
+  let fetchNewQuote = async () => {
+    const response = await fetch("https://api.quotable.io/random") ;
+    const newQuote =await response.json();
+    setQuote(newQuote.content);
+    setAuthor(newQuote.author);
   };
 
   return (
-    <div className="App">
+    <div className="Page">
+      <div className="container">
       <div className="quote">
         <h2>{quote}</h2>
-        <small>-{author}-</small>
+        <div className="author">
+          <small>-{author}</small>
+        </div>
       </div><br />
-      <button className="btn" onClick={fetchNewQuote}>Generate New Quote</button>
+      <button className="btn" onClick={fetchNewQuote}>Next Quote</button>
+      </div>
     </div>
+    
   );
 }
 
